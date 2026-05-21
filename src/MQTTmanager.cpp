@@ -243,7 +243,7 @@ void publicarMensagem(const char *topico, const char *mensagem)
     }
     else
     {
-        debugErro("Falha ao publicar mensagem no tópico: " + String(topico));
+        debugErro("falhao publicar mensagem no tópico: " + String(topico));
     }
 }
 
