@@ -12,6 +12,10 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir);
 void tratarJsonComando(const String& mensagem);
 
+int ligardesligar;
+int aumentar;
+int diminuir;
+
 
 
 void setup()
@@ -71,7 +75,6 @@ void tratarJsonComando(const String& mensagem)
 {
   JsonDocument doc;
   DeserializationError erro = deserializeJson(doc, mensagem);
-
   if(erro)
   {
     debugErro("Erro ao interpretar o Json Enviado.");
@@ -81,18 +84,27 @@ void tratarJsonComando(const String& mensagem)
 
   if(doc["televisao"].is<JsonObject>())
   {
-    if(!doc["televisao"]["ligardesligar"].is<int>() || !doc["televisao"]["aumentar"].is<int>() || !doc["televisao"]["diminuir"].is<int>())
+    if(!doc["televisao"]["power"].is<int>() || !doc["televisao"]["upV"].is<int>() || !doc["televisao"]["downV"].is<int>())
     {
-      debugErro("Json inválido. Use televisao.ligardesligar, televisao.aumentar, televisao.diminuir");
+      debugErro("Json inválido. Use televisao.power, televisao.upV, televisao.downV");
       return;
     }
     else
     {
-      int ligardesligar = doc["televisao"]["ligardesligar"].as<int>();
-      int aumentar = doc["televisao"]["aumentar"].as<int>();
-      int diminuir = doc["televisao"]["diminuir"].as<int>();
+      ligardesligar = doc["televisao"]["power"].as<int>();
+      aumentar = doc["televisao"]["upV"].as<int>();
+      diminuir = doc["televisao"]["downV"].as<int>();
 
       controlarJsonTelevisao(ligardesligar, aumentar, diminuir);
+      debugInfo("Comandos recebidos com sucesso!");
     }
   }
+
+  /*String resposta;
+  serializeJson(doc, resposta);
+  if(ligardesligar == 0){
+    doc["televisao"]["status"]
+  }*/
+
+
 }
