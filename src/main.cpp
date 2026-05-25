@@ -21,7 +21,6 @@ void setup()
   configurarMQTT();
   registrarCallbackMensagem(tratarMensagemRecebida);
   conectarMQTT();
-
 }
 
 void loop() 

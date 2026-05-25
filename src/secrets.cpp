@@ -7,7 +7,7 @@ const char * WIFI_SENHA = "info@134";
 
 
 //====MQTT=====
-const char* MQTT_BROKER = "a12r4jrc022r8n-ats.iot.us-east-1.amazonaws.com";
+const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
 const char* MQTT_CLIENTE_ID = "esp32Televisão";
