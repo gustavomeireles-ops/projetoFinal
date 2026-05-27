@@ -22,6 +22,4 @@ void registrarCallbackMensagem(CallbackMensagemMQTT callback);
 
 int obterTotalTopicosRecebimento();
 
-void controlarLampada();
-
 #endif

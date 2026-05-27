@@ -9,10 +9,13 @@
 const char TOPICO_COMANDO[] = "senai134/diasHeitor/esp32/televisao";
 
 void tratarMensagemRecebida(const char* topico, const String& mensagem);
-void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir);
+void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String& mensagem);
 
-
+int ligardesligar;
+int aumentar;
+int diminuir;
+int compartilharTela;
 
 void setup()
 {
@@ -21,7 +24,6 @@ void setup()
   configurarMQTT();
   registrarCallbackMensagem(tratarMensagemRecebida);
   conectarMQTT();
-
 }
 
 void loop() 
@@ -54,17 +56,18 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
   debugErro("Tópico não tratado: " + String(topico));
 }
 
-void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir)
+void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela)
 {
-  ligardesligar = constrain(ligardesligar, 0, 1);
-  aumentar = constrain(aumentar, 2, 2);
-  diminuir = constrain(diminuir, 3, 3);
+  ligardesligar = constrain(ligardesligar, 0, 0);
+  aumentar = constrain(aumentar, 1, 1);
+  diminuir = constrain(diminuir, 2, 2);
+  compartilharTela = constrain(compartilharTela, 3, 3);
 
   debugInfo("Televisão configurada");
-  debugInfo("ligardesligar: " + String(ligardesligar));
-  debugInfo("aumentar: " + String(aumentar));
-  debugInfo("diminuir: " + String(diminuir));
-
+  debugInfo("power: " + String(ligardesligar));
+  debugInfo("upV: " + String(aumentar));
+  debugInfo("downV: " + String(diminuir));
+  debugInfo("share: " + String(compartilharTela));
 }
 
 // & = referência
@@ -72,7 +75,6 @@ void tratarJsonComando(const String& mensagem)
 {
   JsonDocument doc;
   DeserializationError erro = deserializeJson(doc, mensagem);
-
   if(erro)
   {
     debugErro("Erro ao interpretar o Json Enviado.");
@@ -82,18 +84,20 @@ void tratarJsonComando(const String& mensagem)
 
   if(doc["televisao"].is<JsonObject>())
   {
-    if(!doc["televisao"]["ligardesligar"].is<int>() || !doc["televisao"]["aumentar"].is<int>() || !doc["televisao"]["diminuir"].is<int>())
+    if(!doc["televisao"]["power"].is<int>() || !doc["televisao"]["upV"].is<int>() || !doc["televisao"]["downV"].is<int>() || !doc["televisao"]["share"].is<int>())
     {
-      debugErro("Json inválido. Use televisao.ligardesligar, televisao.aumentar, televisao.diminuir");
+      debugErro("Json inválido. Use televisao.power, televisao.upV, televisao.downV");
       return;
     }
     else
     {
-      int ligardesligar = doc["televisao"]["ligardesligar"].as<int>();
-      int aumentar = doc["televisao"]["aumentar"].as<int>();
-      int diminuir = doc["televisao"]["diminuir"].as<int>();
+      ligardesligar = doc["televisao"]["power"].as<int>();
+      aumentar = doc["televisao"]["upV"].as<int>();
+      diminuir = doc["televisao"]["downV"].as<int>();
+      compartilharTela = doc["televisao"]["share"].as<int>();
 
-      controlarJsonTelevisao(ligardesligar, aumentar, diminuir);
+      controlarJsonTelevisao(ligardesligar, aumentar, diminuir, compartilharTela);
+      debugInfo("Comandos recebidos com sucesso!");
     }
   }
 
