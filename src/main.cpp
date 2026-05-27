@@ -96,4 +96,5 @@ void tratarJsonComando(const String& mensagem)
       controlarJsonTelevisao(ligardesligar, aumentar, diminuir);
     }
   }
+
 }
