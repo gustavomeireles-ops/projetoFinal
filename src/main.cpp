@@ -7,6 +7,7 @@
 #include <ArduinoJson.h>
 
 const char TOPICO_COMANDO[] = "senai134/diasHeitor/esp32/televisao";
+const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
 
 void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
@@ -79,38 +80,38 @@ void tratarJsonComando(const String& mensagem)
   
   if(comando == 1)
   {
-    publicarMensagem("senai/esp32/televisao", "Estado da TV trocado com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
   }
   if(comando == 2)
   {
-    publicarMensagem("senai/esp32/televisao", "Volume aumentado com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Volume aumentado com sucesso");
   }
   if(comando == 3)
   {
-    publicarMensagem("senai/esp32/televisao", "Volume diminuido com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Volume diminuido com sucesso");
   }
   if(comando == 4)
   {
-    publicarMensagem("senai/esp32/televisao", "Direção para cima acionada com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Direção para cima acionada com sucesso");
   }
   if(comando == 5)
   {
-    publicarMensagem("senai/esp32/televisao", "Direção para baixo acionada com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Direção para baixo acionada com sucesso");
   }
   if(comando == 6)
   {
-    publicarMensagem("senai/esp32/televisao", "Direção para esquerda acionada com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Direção para esquerda acionada com sucesso");
   }
   if(comando == 7)
   {
-    publicarMensagem("senai/esp32/televisao", "Direção para direita acionada com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Direção para direita acionada com sucesso");
   }
   if(comando == 8)
   {
-    publicarMensagem("senai/esp32/televisao", "Botão Select acionado com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Botão Select acionado com sucesso");
   }
   if(comando == 9)
   {
-    publicarMensagem("senai/esp32/televisao", "Botão Voltar acionado com sucesso");
+    publicarMensagem(TOPICO_PUBLICAR, "Botão Voltar acionado com sucesso");
   }
 }
