@@ -63,7 +63,9 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
 
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir,int cima,int baixo, int esquerda, int direita, int select, int voltar )
 {
-  //TODO: adicionar aqui o código da televisao! com os ifs! para realmente poder controlar a televisão, assim os valores que eu der apra a variável são os únicos que vão responder aos comandos da televisão.
+  ligardesligar = constrain(ligardesligar, 0, 0);
+  aumentar = constrain(aumentar, 1, 1);
+  diminuir = constrain(diminuir, 2, 2);
 
   debugInfo("Televisão configurada");
   debugInfo("power: " + String(ligardesligar));
@@ -85,7 +87,14 @@ void tratarJsonComando(const String& mensagem)
 
   if(doc["televisao"].is<JsonObject>())
   {
-      ligardesligar = doc["televisao"]["power"].as<int>(); //lIGAR DESLIGAR SE TORNA IGUAL AO JSON POWER E ASSIM EM DIANTE.
+    if(!doc["televisao"]["power"].is<int>() && !doc["televisao"]["upV"].is<int>() && !doc["televisao"]["downV"].is<int>())
+    {
+      debugErro("Json inválido. Use televisao.power, televisao.upV, televisao.downV");
+      return;
+    }
+    else
+    {
+      ligardesligar = doc["televisao"]["power"].as<int>();
       aumentar = doc["televisao"]["upV"].as<int>();
       diminuir = doc["televisao"]["downV"].as<int>();
       cima = doc["televisao"]["cima"].as<int>();
@@ -94,19 +103,19 @@ void tratarJsonComando(const String& mensagem)
       direita = doc["televisao"]["direita"].as<int>();
       selectButton = doc["televisao"]["select"].as<int>();
       voltar = doc["televisao"]["voltar"].as<int>();
+    }
 
       controlarJsonTelevisao(ligardesligar, aumentar, diminuir, cima, baixo, esquerda, direita, selectButton, voltar);
-  }
 
-  if(ligardesligar == 1) //*mudei aqui os valores
+  if(ligardesligar == 0)
   {
     publicarMensagem("senai/esp32/televisao", "Estado da TV trocado com sucesso");
   }
-  if(aumentar == 2)
+  if(aumentar == 1)
   {
     publicarMensagem("senai/esp32/televisao", "Volume aumentado com sucesso");
   }
-  if(diminuir == 3)
+  if(diminuir == 2)
   {
     publicarMensagem("senai/esp32/televisao", "Volume diminuido com sucesso");
   }
@@ -134,4 +143,5 @@ void tratarJsonComando(const String& mensagem)
   {
     publicarMensagem("senai/esp32/televisao", "Botão voltar acionado com sucesso");
   }
+}
 }
