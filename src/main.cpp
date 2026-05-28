@@ -51,6 +51,11 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
     tratarJsonComando(mensagem);
     return;
   }
+  if(strcmp(topico, TOPICO_PUBLICAR) == 0)
+  {
+    tratarJsonComando(mensagem);
+    return;
+  }
   debugErro("Tópico não tratado: " + String(topico));
 }
 
