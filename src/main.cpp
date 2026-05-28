@@ -58,11 +58,7 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
 
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela)
 {
-  ligardesligar = constrain(ligardesligar, 0, 0);
-  aumentar = constrain(aumentar, 1, 1);
-  diminuir = constrain(diminuir, 2, 2);
-  compartilharTela = constrain(compartilharTela, 3, 3);
-
+  git
   debugInfo("Televisão configurada");
   debugInfo("power: " + String(ligardesligar));
   debugInfo("upV: " + String(aumentar));
@@ -101,4 +97,24 @@ void tratarJsonComando(const String& mensagem)
     }
   }
 
+  if(ligardesligar == 0)
+  {
+    publicarMensagem("senai/esp32/televisao", "Estado da TV trocado com sucesso");
+  }
+  debugInfo("Status da TV enviado");
+  if(aumentar == 1)
+  {
+    publicarMensagem("senai/esp32/televisao", "Volume aumentado com sucesso");
+  }
+  debugInfo("Status da TV enviado");
+  if(diminuir == 2)
+  {
+    publicarMensagem("senai/esp32/televisao", "Volume diminuido com sucesso");
+  }
+  debugInfo("Status da TV enviado");
+  if(compartilharTela == 3)
+  {
+    publicarMensagem("senai/esp32/televisao", "Modo Compartilhar Tela");
+  }
+  debugInfo("Status da TV enviado");
 }
