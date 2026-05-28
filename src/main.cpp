@@ -12,9 +12,9 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String& mensagem);
 
-int ligardesligar;
-int aumentar;
-int diminuir;
+int ligardesligar = 0; //0 não faz NADA! por isso inicializei com 0 (boa prática)
+int aumentar = 0;
+int diminuir = 0;
 
 void setup()
 {
@@ -57,9 +57,7 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
 
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir)
 {
-  ligardesligar = constrain(ligardesligar, 0, 0);
-  aumentar = constrain(aumentar, 1, 1);
-  diminuir = constrain(diminuir, 2, 2);
+  //TODO: adicionar aqui o código da televisao! com os ifs! para realmente poder controlar a televisão, assim os valores que eu der apra a variável são os únicos que vão responder aos comandos da televisão.
 
   debugInfo("Televisão configurada");
   debugInfo("power: " + String(ligardesligar));
@@ -81,30 +79,22 @@ void tratarJsonComando(const String& mensagem)
 
   if(doc["televisao"].is<JsonObject>())
   {
-    if(!doc["televisao"]["power"].is<int>() && !doc["televisao"]["upV"].is<int>() && !doc["televisao"]["downV"].is<int>())
-    {
-      debugErro("Json inválido. Use televisao.power, televisao.upV, televisao.downV");
-      return;
-    }
-    else
-    {
-      ligardesligar = doc["televisao"]["power"].as<int>();
+      ligardesligar = doc["televisao"]["power"].as<int>(); //lIGAR DESLIGAR SE TORNA IGUAL AO JSON POWER E ASSIM EM DIANTE.
       aumentar = doc["televisao"]["upV"].as<int>();
       diminuir = doc["televisao"]["downV"].as<int>();
 
       controlarJsonTelevisao(ligardesligar, aumentar, diminuir);
-    }
   }
 
-  if(ligardesligar == 0)
+  if(ligardesligar == 1) //*mudei aqui os valores
   {
     publicarMensagem("senai/esp32/televisao", "Estado da TV trocado com sucesso");
   }
-  if(aumentar == 1)
+  if(aumentar == 2)
   {
     publicarMensagem("senai/esp32/televisao", "Volume aumentado com sucesso");
   }
-  if(diminuir == 2)
+  if(diminuir == 3)
   {
     publicarMensagem("senai/esp32/televisao", "Volume diminuido com sucesso");
   }
