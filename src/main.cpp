@@ -12,9 +12,15 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String& mensagem);
 
-int ligardesligar;
-int aumentar;
-int diminuir;
+int ligardesligar = 0; //0 não faz NADA! por isso inicializei com 0 (boa prática)
+int aumentar = 0;
+int diminuir = 0;
+int cima = 0;
+int baixo = 0;
+int esquerda = 0;
+int direita = 0;
+int selectButton = 0;
+int voltar = 0;
 
 void setup()
 {
@@ -55,7 +61,7 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
   debugErro("Tópico não tratado: " + String(topico));
 }
 
-void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir)
+void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir,int cima,int baixo, int esquerda, int direita, int select, int voltar )
 {
   ligardesligar = constrain(ligardesligar, 0, 0);
   aumentar = constrain(aumentar, 1, 1);
@@ -91,10 +97,15 @@ void tratarJsonComando(const String& mensagem)
       ligardesligar = doc["televisao"]["power"].as<int>();
       aumentar = doc["televisao"]["upV"].as<int>();
       diminuir = doc["televisao"]["downV"].as<int>();
-
-      controlarJsonTelevisao(ligardesligar, aumentar, diminuir);
+      cima = doc["televisao"]["cima"].as<int>();
+      baixo = doc["televisao"]["baixo"].as<int>();
+      esquerda = doc["televisao"]["esquerda"].as<int>();
+      direita = doc["televisao"]["direita"].as<int>();
+      selectButton = doc["televisao"]["select"].as<int>();
+      voltar = doc["televisao"]["voltar"].as<int>();
     }
-  }
+
+      controlarJsonTelevisao(ligardesligar, aumentar, diminuir, cima, baixo, esquerda, direita, selectButton, voltar);
 
   if(ligardesligar == 0)
   {
@@ -108,4 +119,29 @@ void tratarJsonComando(const String& mensagem)
   {
     publicarMensagem("senai/esp32/televisao", "Volume diminuido com sucesso");
   }
+   if(cima == 4)
+  {
+    publicarMensagem("senai/esp32/televisao", "Direção para cima acionada com sucesso");
+  }
+   if(baixo == 5)
+  {
+    publicarMensagem("senai/esp32/televisao", "Direção para baixo acionada com sucesso");
+  }
+   if(esquerda == 6)
+  {
+    publicarMensagem("senai/esp32/televisao", "Direção para esquerda acionada com sucesso");
+  }
+   if(direita == 7)
+  {
+    publicarMensagem("senai/esp32/televisao", "Direção para direita acionada com sucesso");
+  }
+   if(selectButton == 8)
+  {
+    publicarMensagem("senai/esp32/televisao", "Botão select acionado com sucesso");
+  }
+   if(voltar == 9)
+  {
+    publicarMensagem("senai/esp32/televisao", "Botão voltar acionado com sucesso");
+  }
+}
 }
