@@ -6,7 +6,7 @@
 
 #include <ArduinoJson.h>
 
-const char TOPICO_COMANDO[] = "senai134/diasHeitor/esp32/televisao";
+const char TOPICO_RECEBER[] = "senai134/diasHeitor/esp32/televisao";
 const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
 
 void tratarMensagemRecebida(const char* topico, const String& mensagem);
@@ -46,7 +46,7 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
   debugInfo("Tópico: " + String(topico));
   debugInfo("Mensagem: " + mensagem);
 
-  if(strcmp(topico, TOPICO_COMANDO) == 0)
+  if(strcmp(topico, TOPICO_RECEBER) == 0)
   {
     tratarJsonComando(mensagem);
     return;
@@ -80,9 +80,10 @@ void tratarJsonComando(const String& mensagem)
   if(doc["televisao"].is<JsonObject>())
   {
       comando = doc["televisao"]["comando"].as<int>();
-    }
+  }
       controlarJsonTelevisao(comando);
-  
+
+  //*MVP
   if(comando == 1)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
@@ -95,6 +96,8 @@ void tratarJsonComando(const String& mensagem)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Volume diminuido com sucesso");
   }
+
+//*ADICIONAIS
   if(comando == 4)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Direção para cima acionada com sucesso");
