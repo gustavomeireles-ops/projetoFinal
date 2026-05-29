@@ -5,7 +5,6 @@
 const char * WIFI_SSID = "SALA 09";
 const char * WIFI_SENHA = "info@134";
 
-
 //====MQTT=====
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
