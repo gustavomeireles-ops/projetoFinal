@@ -3,15 +3,30 @@
 #include "wifimanager.h"
 #include "MQTTmanager.h"
 #include "DebugManager.h"
-
+#include "TV.h"
+#include <IRremoteESP8266.h>
+#include <IRsend.h>
 #include <ArduinoJson.h>
 
 const char TOPICO_RECEBER[] = "senai134/diasHeitor/esp32/televisao";
 const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
 
+
+//?MQTT
 void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String& mensagem);
+
+//?TELEVISÃO
+void PowerTV();
+void VolumeMais();
+void VolumeMenos();
+void SetaDireita();
+void SetaEsquerda();
+void SetaCima();
+void SetaBaixo();
+void Select();
+void Back();
 
 int comando = 0;
 
@@ -22,6 +37,7 @@ void setup()
   configurarMQTT();
   registrarCallbackMensagem(tratarMensagemRecebida);
   conectarMQTT();
+  irsend.begin();
 }
 
 void loop() 
@@ -63,6 +79,8 @@ void controlarJsonTelevisao(int comando)
 {
   debugInfo("Televisão configurada");
   debugInfo("Comando: " + String(comando));
+
+
 }
 
 // & = referência
@@ -87,39 +105,49 @@ void tratarJsonComando(const String& mensagem)
   if(comando == 1)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
+    PowerTV();
   }
   if(comando == 2)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Volume aumentado com sucesso");
+    VolumeMais();
   }
   if(comando == 3)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Volume diminuido com sucesso");
+    VolumeMenos();
   }
 
 //*ADICIONAIS
   if(comando == 4)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Direção para cima acionada com sucesso");
+    SetaDireita();
   }
   if(comando == 5)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Direção para baixo acionada com sucesso");
+    SetaEsquerda();
   }
   if(comando == 6)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Direção para esquerda acionada com sucesso");
+    SetaCima();
+
   }
   if(comando == 7)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Direção para direita acionada com sucesso");
+    SetaBaixo();
   }
   if(comando == 8)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Botão Select acionado com sucesso");
+    Select();
   }
   if(comando == 9)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Botão Voltar acionado com sucesso");
+    Back();
   }
 }
