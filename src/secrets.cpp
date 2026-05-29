@@ -10,7 +10,7 @@ const char * WIFI_SENHA = "info@134";
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
-const char* MQTT_CLIENTE_ID = "esp32Televisão";
+const char* MQTT_CLIENTE_ID = "TelevisaoEsp32";
 
 const char* MQTT_USUARIO = "TVUser";
 const char* MQTT_SENHA = "Senai@134";
@@ -116,7 +116,7 @@ const int AWS_IOT_PORT = 8883;
 const char* TOPICOS_PUBLICAR[] = { //o ponteiro não separa um espaço específico de memória para não limitar o usuário, por isso o uso do ponteiro(indica o começo e só para quando achar um \0)
     "senai/esp32/status",
     "senai/esp32/log",
-    "senai/esp32/televisao"
+    "senai/esp32/televisao" //publicação e recebimento no mesmo tópico talvez esteja dando o conflito!
 };
 const int TOTAL_TOPICOS_PUBLICAR = sizeof(TOPICOS_PUBLICAR) / sizeof(TOPICOS_PUBLICAR[0]);
 
@@ -124,7 +124,7 @@ const char* TOPICOS_RECEBER[] = {
    "senai134/diasHeitor/esp32/comando",
     "senai134/diasHeitor/esp32/config",
     "senai134/diasHeitor/esp32/televisao",
-    //"senai/esp32/televisao"
+    //REMOVIDO TÓPICO PUBLICAÇÃO
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
 //===================================
