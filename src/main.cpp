@@ -7,7 +7,7 @@
 #include <ArduinoJson.h>
 
 const char TOPICO_COMANDO[] = "senai134/diasHeitor/esp32/televisao";
-const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
+//const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
 
 void tratarMensagemRecebida(const char* topico, const String& mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
@@ -51,11 +51,11 @@ void tratarMensagemRecebida(const char* topico, const String& mensagem)
     tratarJsonComando(mensagem);
     return;
   }
-  if(strcmp(topico, TOPICO_PUBLICAR) == 0)
+  /*if(strcmp(topico, TOPICO_PUBLICAR) == 0)
   {
     tratarJsonComando(mensagem);
     return;
-  }
+  }*/
   debugErro("Tópico não tratado: " + String(topico));
 }
 
@@ -83,7 +83,7 @@ void tratarJsonComando(const String& mensagem)
     }
       controlarJsonTelevisao(comando);
   
-  if(comando == 1)
+  /*if(comando == 1)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
   }
@@ -118,5 +118,5 @@ void tratarJsonComando(const String& mensagem)
   if(comando == 9)
   {
     publicarMensagem(TOPICO_PUBLICAR, "Botão Voltar acionado com sucesso");
-  }
+  }*/
 }

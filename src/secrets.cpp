@@ -27,7 +27,7 @@ const char MQTT_CERTIFICADO_CA[] PROGMEM = R"EOF(
 
 const bool USAR_AWS_IOT = true; //modo de conexão via AWS
 
-const char* AWS_IOT_CLIENT_ID = "TVUser";
+const char* AWS_IOT_CLIENT_ID = "Maria";
 
 const char AWS_CERTIFICADO_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -124,7 +124,7 @@ const char* TOPICOS_RECEBER[] = {
    "senai134/diasHeitor/esp32/comando",
     "senai134/diasHeitor/esp32/config",
     "senai134/diasHeitor/esp32/televisao",
-    "senai/esp32/televisao"
+    //"senai/esp32/televisao"
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
 //===================================
