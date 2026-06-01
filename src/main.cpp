@@ -120,9 +120,15 @@ void tratarJsonComando(const String &mensagem)
     //*MVP
     if (comando == 1)
     {
+      //*Serializar as mensagens que estão em const char*, para transformar em texto JSON(os dois publicarMensagem)
       publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
       PowerTV();
       debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
+
+      String horarioCompleto = ("Sao Paulo Time: " + timeStamp.dateTime());
+      const char* ConverterStringEmC = horarioCompleto.c_str();
+
+      publicarMensagem(TOPICO_PUBLICAR, ConverterStringEmC);
     }
     if (comando == 2)
     {
