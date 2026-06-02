@@ -17,6 +17,7 @@ void tratarMensagemRecebida(const char *topico, const String &mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String &mensagem);
 void controlarComandos();
+void agoraVai();
 
 //?TELEVISÃO
 void PowerTV();
@@ -30,6 +31,9 @@ void Select();
 void Back();
 
 int comando = 0;
+int hora = 0;
+const char* horaEnviar;
+String statusTV;
 
 Timezone timeStamp;
 
@@ -45,6 +49,7 @@ void setup()
   setInterval(3600);
   waitForSync();
   timeStamp.setLocation("America/Sao_Paulo");
+  //timeStamp.setPosix("<-03>3");
 
 
 }
@@ -93,10 +98,10 @@ void controlarJsonTelevisao(int comando)
   debugInfo("Comando: " + String(comando));
 }
 
-// & = referência
+JsonDocument doc;
+
 void tratarJsonComando(const String &mensagem)
 {
-  JsonDocument doc;
   DeserializationError erro = deserializeJson(doc, mensagem);
   if (erro)
   {
@@ -110,74 +115,84 @@ void tratarJsonComando(const String &mensagem)
     comando = doc["televisao"]["comando"].as<int>();
   }
 
+  if(doc["hora"].is<JsonObject>())
+  {
+    hora = doc["hora"].as<int>();
+  }
+
   controlarJsonTelevisao(comando);
 
-  controlarComandos(); 
+  controlarComandos();
   }
+
+  String respostaPosix = timeStamp.getPosix();
+  JsonDocument resposta;
 
   void controlarComandos()
   {
     //*MVP
     if (comando == 1)
     {
-      //*Serializar as mensagens que estão em const char*, para transformar em texto JSON(os dois publicarMensagem)
-      publicarMensagem(TOPICO_PUBLICAR, "Estado da TV trocado com sucesso");
       PowerTV();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
-
-      String horarioCompleto = ("Sao Paulo Time: " + timeStamp.dateTime());
-      const char* ConverterStringEmC = horarioCompleto.c_str();
-
-      publicarMensagem(TOPICO_PUBLICAR, ConverterStringEmC);
     }
     if (comando == 2)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Volume aumentado com sucesso");
       VolumeMais();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 3)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Volume diminuido com sucesso");
       VolumeMenos();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     
     //*ADICIONAIS
     if (comando == 4)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Direção para cima acionada com sucesso");
       SetaDireita();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 5)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Direção para baixo acionada com sucesso");
       SetaEsquerda();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 6)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Direção para esquerda acionada com sucesso");
       SetaCima();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 7)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Direção para direita acionada com sucesso");
       SetaBaixo();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 8)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Botão Select acionado com sucesso");
       Select();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
     if (comando == 9)
     {
-      publicarMensagem(TOPICO_PUBLICAR, "Botão Voltar acionado com sucesso");
       Back();
-      debugInfo("Sao Paulo Time: " + timeStamp.dateTime());
     }
   }
+
+  void agoraVai()
+  {
+        if(comando > 0 && comando < 9)
+        {
+          statusTV = "OK";
+        }
+        else{
+          statusTV = "NÃO";
+        }
+        resposta["tv"] = statusTV;
+        resposta["hora"] = respostaPosix.c_str();
+        
+        char gravarJson[256];
+        serializeJson(resposta, gravarJson);
+        publicarMensagem(TOPICO_PUBLICAR, gravarJson);
+  }
+
+  /*
+  {
+   TV : ok
+   timestamp : 1727843876842
+  }
+  
+  
+  */
