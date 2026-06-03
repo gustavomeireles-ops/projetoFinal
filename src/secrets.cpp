@@ -9,9 +9,9 @@ const char * WIFI_SENHA = "info@134";
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
-const char* MQTT_CLIENTE_ID = "TelevisaoEsp32";
+const char* MQTT_CLIENTE_ID = "yoshi-tv";
 
-const char* MQTT_USUARIO = "TVUser";
+const char* MQTT_USUARIO = "TVlisão";
 const char* MQTT_SENHA = "Senai@134";
 
 const bool MQTT_USAR_TLS = true; //modo de conexão de segurança
@@ -26,7 +26,7 @@ const char MQTT_CERTIFICADO_CA[] PROGMEM = R"EOF(
 
 const bool USAR_AWS_IOT = true; //modo de conexão via AWS
 
-const char* AWS_IOT_CLIENT_ID = "Maria";
+const char* AWS_IOT_CLIENT_ID = "yoshi-TV";
 
 const char AWS_CERTIFICADO_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -53,58 +53,58 @@ rqXRfboQnoZsG4q5WTP468SQvvG5
 
 const char AWS_CERTIFICADO_CRT[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
-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
+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
-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
+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
-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
+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
 -----END CERTIFICATE-----
 )EOF";
 
 const char AWS_CERTIFICADO_PRIVATE[] PROGMEM = R"EOF(
 -----BEGIN RSA PRIVATE KEY-----
-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
+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
 -----END RSA PRIVATE KEY-----
 )EOF";
 
-const char* AWS_IOT_ENDPOINT = "a12r4jrc022r8n-ats.iot.us-east-1.amazonaws.com";
+const char* AWS_IOT_ENDPOINT = "a3cxr9ayydc4np-ats.iot.us-east-1.amazonaws.com";
 
 const int AWS_IOT_PORT = 8883;
 
@@ -112,18 +112,13 @@ const int AWS_IOT_PORT = 8883;
 //   MQTT
 //-----------------
 
-const char* TOPICOS_PUBLICAR[] = { //o ponteiro não separa um espaço específico de memória para não limitar o usuário, por isso o uso do ponteiro(indica o começo e só para quando achar um \0)
-    "senai/esp32/status",
-    "senai/esp32/log",
-    "senai/esp32/televisao" //publicação e recebimento no mesmo tópico talvez esteja dando o conflito!
+const char* TOPICOS_PUBLICAR[] = { 
+    "senai134/equipe/yoshi/devices/status"
 };
 const int TOTAL_TOPICOS_PUBLICAR = sizeof(TOPICOS_PUBLICAR) / sizeof(TOPICOS_PUBLICAR[0]);
 
 const char* TOPICOS_RECEBER[] = {
-   "senai134/diasHeitor/esp32/comando",
-    "senai134/diasHeitor/esp32/config",
-    "senai134/diasHeitor/esp32/televisao",
-    //REMOVIDO TÓPICO PUBLICAÇÃO
+    "senai134/equipe/yoshi/devices/projetofinal"
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
 //===================================
