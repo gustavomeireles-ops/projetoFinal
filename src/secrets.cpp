@@ -113,12 +113,12 @@ const int AWS_IOT_PORT = 8883;
 //-----------------
 
 const char* TOPICOS_PUBLICAR[] = { 
-    "senai134/equipe/yoshi/devices/status"
+    "senai134/shared/projeto/status"
 };
 const int TOTAL_TOPICOS_PUBLICAR = sizeof(TOPICOS_PUBLICAR) / sizeof(TOPICOS_PUBLICAR[0]);
 
 const char* TOPICOS_RECEBER[] = {
-    "senai134/equipe/yoshi/devices/projetofinal"
+    "senai134/shared/projeto/yoshi"
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
 //===================================

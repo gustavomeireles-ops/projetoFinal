@@ -9,8 +9,8 @@
 #include <ArduinoJson.h>
 #include <ezTime.h>
 
-const char TOPICO_PUBLICAR[] = "senai134/equipe/yoshi/devices/status";
-const char TOPICO_RECEBER[] = "senai134/equipe/yoshi/devices/projetofinal";
+const char TOPICO_PUBLICAR[] = "senai134/shared/projeto/status";
+const char TOPICO_RECEBER[] = "senai134/shared/projeto/yoshi";
 
 //?MQTT
 void tratarMensagemRecebida(const char *topico, const String &mensagem);
