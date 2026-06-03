@@ -9,7 +9,7 @@
 #include <ArduinoJson.h>
 #include <ezTime.h>
 
-const char TOPICO_RECEBER[] = "senai134/diasHeitor/esp32/televisao";
+const char TOPICO_RECEBER[] = "senai134/diasHeitor/esp32";
 const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
 
 //?MQTT
@@ -18,6 +18,7 @@ void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int c
 void tratarJsonComando(const String &mensagem);
 void controlarComandos();
 void agoraVai();
+void configurarNTP();
 
 //?TELEVISÃO
 void PowerTV();
@@ -32,6 +33,7 @@ void Back();
 
 int comando = 0;
 int hora = 0;
+
 const char* horaEnviar;
 String statusTV;
 
@@ -49,9 +51,8 @@ void setup()
   setInterval(3600);
   waitForSync();
   timeStamp.setLocation("America/Sao_Paulo");
-  //timeStamp.setPosix("<-03>3");
 
-
+  configurarNTP();
 }
 
 void loop()
@@ -115,17 +116,16 @@ void tratarJsonComando(const String &mensagem)
     comando = doc["televisao"]["comando"].as<int>();
   }
 
-  if(doc["hora"].is<JsonObject>())
+  /*if(doc["hora"].is<JsonObject>())
   {
     hora = doc["hora"].as<int>();
-  }
-
+  }*/
+  
   controlarJsonTelevisao(comando);
 
   controlarComandos();
   }
 
-  String respostaPosix = timeStamp.getPosix();
   JsonDocument resposta;
 
   void controlarComandos()
@@ -134,45 +134,60 @@ void tratarJsonComando(const String &mensagem)
     if (comando == 1)
     {
       PowerTV();
+      agoraVai();
     }
     if (comando == 2)
     {
       VolumeMais();
+      agoraVai();
     }
     if (comando == 3)
     {
       VolumeMenos();
+      agoraVai();
     }
     
     //*ADICIONAIS
     if (comando == 4)
     {
       SetaDireita();
+      agoraVai();
     }
     if (comando == 5)
     {
       SetaEsquerda();
+      agoraVai();
     }
     if (comando == 6)
     {
       SetaCima();
+      agoraVai();
     }
     if (comando == 7)
     {
       SetaBaixo();
+      agoraVai();
     }
     if (comando == 8)
     {
       Select();
+      agoraVai();
     }
     if (comando == 9)
     {
       Back();
+      agoraVai();
     }
+  }
+
+  void configurarNTP()
+  {
+    configTime(-3 * 3600, 0, "pool.ntp.org", "time.google.com");
   }
 
   void agoraVai()
   {
+    time_t respostaPosix = time(nullptr);
         if(comando > 0 && comando < 9)
         {
           statusTV = "OK";
@@ -181,9 +196,15 @@ void tratarJsonComando(const String &mensagem)
           statusTV = "NÃO";
         }
         resposta["tv"] = statusTV;
-        resposta["hora"] = respostaPosix.c_str();
+        resposta["hora"] = respostaPosix;
+
+        if(respostaPosix < 1000000000)
+        {
+          debugInfo("NTP ainda não sincronizado!");
+          return;
+        }
         
-        char gravarJson[256];
+        char gravarJson[1000];
         serializeJson(resposta, gravarJson);
         publicarMensagem(TOPICO_PUBLICAR, gravarJson);
   }

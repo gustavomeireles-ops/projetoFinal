@@ -9,9 +9,9 @@ const char * WIFI_SENHA = "info@134";
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
-const char* MQTT_CLIENTE_ID = "TelevisaoEsp32";
+const char* MQTT_CLIENTE_ID = "Televisaozinha2";
 
-const char* MQTT_USUARIO = "TVUser";
+const char* MQTT_USUARIO = "TVUser1000";
 const char* MQTT_SENHA = "Senai@134";
 
 const bool MQTT_USAR_TLS = true; //modo de conexão de segurança
@@ -26,7 +26,7 @@ const char MQTT_CERTIFICADO_CA[] PROGMEM = R"EOF(
 
 const bool USAR_AWS_IOT = true; //modo de conexão via AWS
 
-const char* AWS_IOT_CLIENT_ID = "Maria";
+const char* AWS_IOT_CLIENT_ID = "TVUSUARIOZINHO";
 
 const char AWS_CERTIFICADO_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -122,7 +122,7 @@ const int TOTAL_TOPICOS_PUBLICAR = sizeof(TOPICOS_PUBLICAR) / sizeof(TOPICOS_PUB
 const char* TOPICOS_RECEBER[] = {
    "senai134/diasHeitor/esp32/comando",
     "senai134/diasHeitor/esp32/config",
-    "senai134/diasHeitor/esp32/televisao",
+    "senai134/diasHeitor/esp32"
     //REMOVIDO TÓPICO PUBLICAÇÃO
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
