@@ -9,8 +9,9 @@
 #include <ArduinoJson.h>
 #include <ezTime.h>
 
-const char TOPICO_RECEBER[] = "senai134/diasHeitor/esp32";
-const char TOPICO_PUBLICAR[] = "senai/esp32/televisao";
+const char TOPICO_PUBLICAR[] = "senai134/shared/projeto/status";
+const char TOPICO_RECEBER[] = "senai134/shared/projeto/yoshi";
+
 
 //?MQTT
 void tratarMensagemRecebida(const char *topico, const String &mensagem);
@@ -37,6 +38,7 @@ int hora = 0;
 const char* horaEnviar;
 String statusTV;
 
+//?EZTIME
 Timezone timeStamp;
 
 void setup()
@@ -47,7 +49,8 @@ void setup()
   registrarCallbackMensagem(tratarMensagemRecebida);
   conectarMQTT();
   irsend.begin();
-  
+
+  //?EZTIME
   setInterval(3600);
   waitForSync();
   timeStamp.setLocation("America/Sao_Paulo");
@@ -61,6 +64,7 @@ void loop()
   garantirMQTTConectado();
   loopMQTT();
 
+  //?EZTIME
   events();
 }
 
