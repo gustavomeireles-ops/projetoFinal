@@ -120,10 +120,10 @@ void tratarJsonComando(const String &mensagem)
     comando = doc["televisao"]["comando"].as<int>();
   }
 
-  /*if(doc["hora"].is<JsonObject>())
+  if(doc["hora"].is<JsonObject>())
   {
     hora = doc["hora"].as<int>();
-  }*/
+  }
   
   controlarJsonTelevisao(comando);
 
@@ -192,12 +192,12 @@ void tratarJsonComando(const String &mensagem)
   void agoraVai()
   {
     time_t respostaPosix = time(nullptr);
-        if(comando > 0 && comando < 9)
+        if(comando > 0 && comando <= 9)
         {
           statusTV = "OK";
         }
         else{
-          statusTV = "NÃO";
+          statusTV = "NAO";
         }
         resposta["tv"] = statusTV;
         resposta["hora"] = respostaPosix;
@@ -212,12 +212,3 @@ void tratarJsonComando(const String &mensagem)
         serializeJson(resposta, gravarJson);
         publicarMensagem(TOPICO_PUBLICAR, gravarJson);
   }
-
-  /*
-  {
-   TV : ok
-   timestamp : 1727843876842
-  }
-  
-  
-  */
