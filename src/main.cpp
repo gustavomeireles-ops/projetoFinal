@@ -195,7 +195,8 @@ void tratarJsonComando(const String &mensagem)
         {
           statusTV = "tv ok";
         }
-        else{
+        else
+        {
           statusTV = "tv nao ok";
         }
         resposta["modulo"] = statusTV;
