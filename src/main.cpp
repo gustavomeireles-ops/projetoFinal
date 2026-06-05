@@ -154,11 +154,13 @@ void tratarJsonComando(const String &mensagem)
     {
       SetaDireita();
       respostaPublicacao();
+
     }
     if (comando == 5)
     {
       SetaEsquerda();
       respostaPublicacao();
+
     }
     if (comando == 6)
     {
@@ -186,7 +188,6 @@ void tratarJsonComando(const String &mensagem)
   {
     configTime(-3 * 3600, 0, "pool.ntp.org", "time.google.com");
   }
-
   void respostaPublicacao()
   {
     time_t respostaPosix = time(nullptr);
