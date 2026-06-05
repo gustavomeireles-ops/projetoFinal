@@ -12,13 +12,12 @@
 const char TOPICO_PUBLICAR[] = "senai134/shared/projeto/status";
 const char TOPICO_RECEBER[] = "senai134/shared/projeto/yoshi";
 
-
 //?MQTT
 void tratarMensagemRecebida(const char *topico, const String &mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String &mensagem);
 void controlarComandos();
-void agoraVai();
+void respostaDeRetorno();
 void configurarNTP();
 
 //?TELEVISÃO
@@ -138,49 +137,49 @@ void tratarJsonComando(const String &mensagem)
     if (comando == 1)
     {
       PowerTV();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 2)
     {
       VolumeMais();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 3)
     {
       VolumeMenos();
-      agoraVai();
+      respostaDeRetorno();
     }
     
     //*ADICIONAIS
     if (comando == 4)
     {
       SetaDireita();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 5)
     {
       SetaEsquerda();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 6)
     {
       SetaCima();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 7)
     {
       SetaBaixo();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 8)
     {
       Select();
-      agoraVai();
+      respostaDeRetorno();
     }
     if (comando == 9)
     {
       Back();
-      agoraVai();
+      respostaDeRetorno();
     }
   }
 
@@ -189,7 +188,7 @@ void tratarJsonComando(const String &mensagem)
     configTime(-3 * 3600, 0, "pool.ntp.org", "time.google.com");
   }
 
-  void agoraVai()
+  void respostaDeRetorno()
   {
     time_t respostaPosix = time(nullptr);
         if(comando > 0 && comando <= 9)
