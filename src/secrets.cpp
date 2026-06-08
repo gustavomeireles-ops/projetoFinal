@@ -9,7 +9,7 @@ const char * WIFI_SENHA = "info@134";
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
-const char* MQTT_CLIENTE_ID = "yoshi-tv";
+const char* MQTT_CLIENTE_ID = "yoshi-tevelisao";
 
 const char* MQTT_USUARIO = "TVlisão";
 const char* MQTT_SENHA = "Senai@134";
@@ -27,7 +27,7 @@ const char MQTT_CERTIFICADO_CA[] PROGMEM = R"EOF(
 const bool USAR_AWS_IOT = true; //modo de conexão via AWS
 
 
-const char* AWS_IOT_CLIENT_ID = "yoshi-TV";
+const char* AWS_IOT_CLIENT_ID = "yoshi-tevelisao";
 
 const char AWS_CERTIFICADO_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----

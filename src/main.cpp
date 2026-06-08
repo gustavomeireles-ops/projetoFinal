@@ -17,7 +17,8 @@ void tratarMensagemRecebida(const char *topico, const String &mensagem);
 void controlarJsonTelevisao(int ligardesligar, int aumentar, int diminuir, int compartilharTela);
 void tratarJsonComando(const String &mensagem);
 void controlarComandos();
-void agoraVai();
+void respostaPublicacao();
+void configurarNTP();
 
 //?TELEVISÃO
 void PowerTV();
@@ -31,7 +32,8 @@ void Select();
 void Back();
 
 int comando = 0;
-int hora = 0;
+unsigned long hora = 0;
+
 const char* horaEnviar;
 String statusTV;
 
@@ -51,9 +53,7 @@ void setup()
   setInterval(3600);
   waitForSync();
   timeStamp.setLocation("America/Sao_Paulo");
-  //timeStamp.setPosix("<-03>3");
-
-
+  configurarNTP();
 }
 
 void loop()
@@ -118,9 +118,9 @@ void tratarJsonComando(const String &mensagem)
     comando = doc["televisao"]["comando"].as<int>();
   }
 
-  if(doc["hora"].is<JsonObject>())
+  if(doc["hora"].is<long>())
   {
-    hora = doc["hora"].as<int>();
+    hora = doc["hora"].as<unsigned long>();
   }
 
   controlarJsonTelevisao(comando);
@@ -137,65 +137,80 @@ void tratarJsonComando(const String &mensagem)
     if (comando == 1)
     {
       PowerTV();
+      respostaPublicacao();
     }
     if (comando == 2)
     {
       VolumeMais();
+      respostaPublicacao();
     }
     if (comando == 3)
     {
       VolumeMenos();
+      respostaPublicacao();
     }
     
     //*ADICIONAIS
     if (comando == 4)
     {
       SetaDireita();
+      respostaPublicacao();
+
     }
     if (comando == 5)
     {
       SetaEsquerda();
+      respostaPublicacao();
+
     }
     if (comando == 6)
     {
       SetaCima();
+      respostaPublicacao();
     }
     if (comando == 7)
     {
       SetaBaixo();
+      respostaPublicacao();
     }
     if (comando == 8)
     {
       Select();
+      respostaPublicacao();
     }
     if (comando == 9)
     {
       Back();
+      respostaPublicacao();
     }
   }
 
-  void agoraVai()
+  void configurarNTP()
   {
-        if(comando > 0 && comando < 9)
+    configTime(-3 * 3600, 0, "pool.ntp.org", "time.google.com");
+  }
+  void respostaPublicacao()
+  {
+    time_t respostaPosix = time(nullptr);
+        if(comando > 0 && comando <= 9)
         {
-          statusTV = "OK";
+          statusTV = "tv ok";
         }
-        else{
-          statusTV = "NÃO";
+        else
+        {
+          statusTV = "tv nao ok";
         }
-        resposta["tv"] = statusTV;
-        resposta["hora"] = respostaPosix.c_str();
+        resposta["modulo"] = statusTV;
+        resposta["hora"] = respostaPosix;
+
+        if(respostaPosix < 1000000000)
+        {
+          debugInfo("NTP ainda não sincronizado!");
+          return;
+        }
         
-        char gravarJson[256];
+        char gravarJson[1000];
+        
         serializeJson(resposta, gravarJson);
         publicarMensagem(TOPICO_PUBLICAR, gravarJson);
   }
-
-  /*
-  {
-   TV : ok
-   timestamp : 1727843876842
-  }
-  
-  
-  */
