@@ -2,7 +2,6 @@
 #include <IRremoteESP8266.h>
 #include <IRsend.h>
 #include "TV.h"
-//#include <NTPClient.h>
 
 const uint32_t codigoPower = 0x20DF10EF;
 const uint32_t codigoVolMais = 0x20DF40BF;

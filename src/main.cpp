@@ -1,4 +1,3 @@
-
 #include <Arduino.h>
 #include "wifimanager.h"
 #include "MQTTmanager.h"
@@ -10,7 +9,7 @@
 #include <ezTime.h>
 
 const char TOPICO_PUBLICAR[] = "senai134/shared/projeto/status";
-const char TOPICO_RECEBER[] = "senai134/shared/projeto/yoshi";
+const char TOPICO_RECEBER[] = "senai134/shared/projeto/TV";
 
 //?MQTT
 void tratarMensagemRecebida(const char *topico, const String &mensagem);
@@ -47,6 +46,7 @@ void setup()
   configurarMQTT();
   registrarCallbackMensagem(tratarMensagemRecebida);
   conectarMQTT();
+
   irsend.begin();
 
   //?EZTIME
@@ -113,9 +113,9 @@ void tratarJsonComando(const String &mensagem)
     return;
   }
 
-  if (doc["televisao"].is<JsonObject>())
+  if (doc["comando"].is<int>())
   {
-    comando = doc["televisao"]["comando"].as<int>();
+    comando = doc["comando"].as<int>();
   }
 
   if(doc["hora"].is<long>())
@@ -188,9 +188,11 @@ void tratarJsonComando(const String &mensagem)
   {
     configTime(-3 * 3600, 0, "pool.ntp.org", "time.google.com");
   }
+
   void respostaPublicacao()
   {
     time_t respostaPosix = time(nullptr);
+
         if(comando > 0 && comando <= 9)
         {
           statusTV = "tv ok";
@@ -199,6 +201,7 @@ void tratarJsonComando(const String &mensagem)
         {
           statusTV = "tv nao ok";
         }
+        
         resposta["modulo"] = statusTV;
         resposta["hora"] = respostaPosix;
 
