@@ -9,9 +9,9 @@ const char * WIFI_SENHA = "info@134";
 const char* MQTT_BROKER = "------";
 const int MQTT_PORTA = 8883;
 
-const char* MQTT_CLIENTE_ID = "yoshi-tevelisao";
+const char* MQTT_CLIENTE_ID = "yoshi-TV";
 
-const char* MQTT_USUARIO = "TVlisão";
+const char* MQTT_USUARIO = "TV";
 const char* MQTT_SENHA = "Senai@134";
 
 const bool MQTT_USAR_TLS = true; //modo de conexão de segurança
@@ -27,7 +27,7 @@ const char MQTT_CERTIFICADO_CA[] PROGMEM = R"EOF(
 const bool USAR_AWS_IOT = true; //modo de conexão via AWS
 
 
-const char* AWS_IOT_CLIENT_ID = "yoshi-tevelisao";
+const char* AWS_IOT_CLIENT_ID = "yoshi-TV";
 
 const char AWS_CERTIFICADO_CA[] PROGMEM = R"EOF(
 -----BEGIN CERTIFICATE-----
@@ -119,7 +119,7 @@ const char* TOPICOS_PUBLICAR[] = {
 const int TOTAL_TOPICOS_PUBLICAR = sizeof(TOPICOS_PUBLICAR) / sizeof(TOPICOS_PUBLICAR[0]);
 
 const char* TOPICOS_RECEBER[] = {
-    "senai134/shared/projeto/yoshi"
+    "senai134/shared/projeto/TV"
 };
 const int TOTAL_TOPICOS_RECEBER = sizeof(TOPICOS_RECEBER) / sizeof(TOPICOS_RECEBER[0]);
 //===================================
