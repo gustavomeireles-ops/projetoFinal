@@ -127,7 +127,7 @@ void conectarMQTT()
 {
     if (!wifiEstaConectado())
     {
-        debugErro("MQTT não pode conectar poque o WiFi esta desconectado");
+        debugErro("MQTT não pode conectar porque o WiFi esta desconectado");
     }
     debugInfo("=============");
     debugInfo("Iniciando conexão MQTT...");
@@ -183,7 +183,7 @@ void conectarMQTT()
                     debugErro("Falha ao se inscrever no tópico: " + String(topico));
                 }
             }
-            // TODO: Publicar uma mensagem em um tópico informando que o esp32 foi conectado.
+            // Publicar uma mensagem em um tópico informando que o esp32 foi conectado.
         }
         else
         {

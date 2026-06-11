@@ -1,4 +1,4 @@
-📺 TeleControl – Módulo de Controle de Televisão
+📺 ClassControl – Módulo de Controle de Televisão
 
 Controle de Televisão via ESP32, MQTT e Infravermelho
 
@@ -8,7 +8,7 @@ Sistema responsável por receber comandos através da rede e convertê-los em si
 
 🎯 Objetivo
 
-Este módulo integra o projeto TeleControl e tem como finalidade controlar uma televisão utilizando um ESP32 conectado à rede Wi-Fi.
+Este módulo integra o projeto ClassControl e tem como finalidade controlar uma televisão utilizando um ESP32 conectado à rede Wi-Fi.
 
 Os comandos são recebidos por meio do protocolo MQTT, processados em formato JSON e transmitidos para a televisão através de um LED infravermelho (IR).
 
@@ -39,7 +39,7 @@ Após a execução de cada comando, o módulo publica uma resposta informando o 
 📥 Tópico de Recebimento
 
 ```text
-senai134/shared/projeto/yoshi
+senai134/shared/projeto/TV
 ```
 
 Responsável por receber os comandos destinados ao módulo da televisão.
@@ -179,7 +179,7 @@ Sistema Externo
 
 ---
 
-📺 TeleControl – Módulo de Controle de Televisão
+📺 ClassControl – Módulo de Controle de Televisão
 
 Desenvolvido utilizando ESP32, MQTT e comunicação infravermelha para integração com sistemas de automação em sala de aula.
 
