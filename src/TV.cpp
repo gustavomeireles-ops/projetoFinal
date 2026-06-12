@@ -13,61 +13,63 @@ const uint32_t codigoSetaBaixo = 0x20DF827D;
 const uint32_t codigoSelect = 0x20DF22DD;
 const uint32_t codigoBack = 0x20DF14EB;
 
+int bits = 32;  // é o numero de bits que o controle remoto utiliza para enviar os códigos, no caso da TV é 32 bits.
+
 const uint16_t pinIR = 1;
 IRsend irsend(pinIR);
 
 //?Comandos de Tela
 void PowerTV()
 {
-  irsend.sendNEC(codigoPower, 32);
-  Serial.println("TV Ligada/Desligada"); 
+  irsend.sendNEC(codigoPower, bits); 
+  debugInfo("TV Ligada/Desligada"); 
 }
 
 void VolumeMais()
 {
-  irsend.sendNEC(codigoVolMais, 32);
-  Serial.println("Volume Aumentado");
+  irsend.sendNEC(codigoVolMais, bits);
+  debugInfo("Volume Aumentado");
 }
 
 void VolumeMenos()
 {
-  irsend.sendNEC(codigoVolMenos, 32);
-  Serial.println("Volume Diminuido");
+  irsend.sendNEC(codigoVolMenos, bits);
+  debugInfo("Volume Diminuido");
 }
 
 //?Comandos Ok, Voltar e Direcionais
 void SetaDireita()
 {
-  irsend.sendNEC(codigoSetaDireita, 32);
-  Serial.println("Seta Direita");
+  irsend.sendNEC(codigoSetaDireita, bits);
+  debugInfo("Seta Direita");
 }
 
 void SetaEsquerda()
 {
-  irsend.sendNEC(codigoSetaEsquerda, 32);
-  Serial.println("Seta Esquerda");
+  irsend.sendNEC(codigoSetaEsquerda, bits);
+  debugInfo("Seta Esquerda");
 }
 
 void SetaCima()
 {
-  irsend.sendNEC(codigoSetaCima, 32);
-  Serial.println("Seta Cima");
+  irsend.sendNEC(codigoSetaCima, bits);
+  debugInfo("Seta Cima");
 }
 
 void SetaBaixo()
 {
-  irsend.sendNEC(codigoSetaBaixo, 32);
-  Serial.println("Seta Baixo");
+  irsend.sendNEC(codigoSetaBaixo, bits);
+  debugInfo("Seta Baixo");
 }   
 
 void Select()
 {
-  irsend.sendNEC(codigoSelect, 32);
-  Serial.println("Select");
+  irsend.sendNEC(codigoSelect, bits);
+  debugInfo("Select");
 }
 
 void Back()
 {
-  irsend.sendNEC(codigoBack, 32);
-  Serial.println("Back");
+  irsend.sendNEC(codigoBack, bits);
+  debugInfo("Back");
 }
